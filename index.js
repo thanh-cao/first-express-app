@@ -8,6 +8,10 @@ app.get('/', (req, res) => {
     res.render('home') // same as return render_template('home') in flask
 })
 
+app.get('/random', (req, res) => {
+    const random = Math.floor(Math.random() * 10) + 1;
+    res.render('random', { random }); // render variable random to be used in the template
+})
 app.listen(3000, () => {
     console.log('Listening on port 3000');
 })
