@@ -1,5 +1,6 @@
 const express = require('express');  // import express framework
 const app = express(); // initialize express app
+const redditData = require('./data.json');
 
 app.set('view engine', 'ejs') // set the view engine / templating tool the app is going to use
 // there are many different templating tools can be used like handlebars, nunjucks, etc.
@@ -10,7 +11,12 @@ app.get('/', (req, res) => {
 
 app.get('/r/:subreddit', (req, res) => {
     const { subreddit } = req.params;
-    res.render('subreddit', { subreddit });
+    const data = redditData[subreddit];
+    if (data) {
+        res.render('subreddit', { ...data });
+    } else {
+        res.render('notfound', { subreddit })
+    }
 })
 
 app.get('/random', (req, res) => {
